@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.objectFactory" value="spring" />   <!-- 告诉Spring在运行起来就加载对象 -->
+    
+    <constant name="struts.i18n.encoding" value="GBK"/>
+    <!-- 指定允许上传的文件最大字节数。默认值是2097152(2M) -->
+    <constant name="struts.multipart.maxSize" value="22097152"/>
+  
+    
+    
+    <!-- 用户注册 -->
+    <package name="default" namespace="/" extends="json-default">
+          <action name="userregister" class="com.zhang.action.UserAction" method="register">
+              <result type="json">
+                  <param name="result">result</param>
+                </result> 
+            </action>
+            
+            <!-- 管理员登录 -->
+            <action name="adminlogin" class="com.zhang.action.AdminAction" method="login">
+              <result type="json">
+                  <param name="result">result</param>
+                </result> 
+            </action>
+            
+            <!-- 获取所有等待打印的任务 -->
+            <action name="gettasktoprint" class="com.zhang.action.TaskAction" method="getAll">
+                <result type="json">
+                    <param name="data">objresult</param>
+                </result>
+            </action>
+            
+           
+
+	      <!-- 设置打印属性 -->
+	      <action name="setattribute" class="com.zhang.action.TaskAction" method="setAttribute">
+            	<result type="json">
+                  <param name="result">result</param>
+                </result> 
+            </action>
+            
+            <!-- 获取打印属性 -->
+	
+	       <!-- 上传文件 -->
+			<action name="upload" class="com.zhang.action.UploadAction">
+				<result type="json">
+                  <param name="result">result</param>
+                </result> 
+			</action>
+	
+       
+    </package>
+
+   
+
+</struts>

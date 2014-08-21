@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost/print</property>
+	    <property name="connection.username">root</property>
+	    <property name="connection.password">thwl</property>
+	    <property name="hibernate.c3p0.max_size">40</property>
+		<property name="hibernate.c3p0.min_size">1</property>
+	    <property name="hibernate.c3p0.timeout">1000</property>
+		<property name="hibernate.c3p0.max_statements">20</property>
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
+		<property name="hibernate.c3p0.acquire_increment">3</property>
+		<property name="hibernate.c3p0.validate">true</property>
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hbm2ddl.auto">update</property>
+		<property name="show_sql">true</property>
+	    <property name="hibernate.format_sql">true</property>
+		<property name="connection.useUnicode">true</property>
+        <property name="connection.characterEncoding">UTF-8</property>
+        
+        <!-- 设置事务自动提交 -->
+		<property name="hibernate.connection.autocommit">true</property> 
+        
+        <!-- 配置映射对象 -->
+        
+        <mapping class="com.zhang.domain.Admin"/>
+        <mapping class="com.zhang.domain.PrintFile"/>
+        <mapping class="com.zhang.domain.Task"/>
+        <mapping class="com.zhang.domain.Users"/>
+        <mapping class="com.zhang.domain.PrintAttribute"/>
+		 
+	</session-factory>
+</hibernate-configuration>

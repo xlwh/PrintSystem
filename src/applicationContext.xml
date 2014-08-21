@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns ="http://www.springframework.org/schema/beans" 
+    xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation ="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    
+    <!-- 加载Hibernate配置文件 -->
+    <bean id="sessionFactory"  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+       	<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+    </bean>
+    
+    
+     <bean id="hibernateTemplete" class="org.springframework.orm.hibernate3.HibernateTemplate">
+         <property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+     
+    <!-- 配置事务 -->
+	<bean id="htm"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ti" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+			<ref bean="htm" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<!-- key:方法名称 -->
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="query*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+    
+  <!-- 配置Action -->
+      
+    <bean name="UserAction" class="com.zhang.action.UserAction"/>
+    <bean name="adminaction" class="com.zhang.action.AdminAction"/>
+    <bean name="taskaction" class="com.zhang.action.TaskAction"/>
+      
+     
+      
+    
+    <!-- 装载domaim对象进入工厂 -->
+    <bean name="admin" class="com.zhang.domain.Admin"></bean>
+    <bean name="printattribute" class="com.zhang.domain.PrintAttribute"></bean>
+    <bean name="printfile" class="com.zhang.domain.PrintFile"></bean>
+    <bean name="task" class="com.zhang.domain.Task"></bean>
+    <bean name="users" class="com.zhang.domain.Users"></bean>
+    
+    <!-- 装载dao层对象进入工厂 -->
+    <bean name="admindao" class="com.zhang.dao.AdminDao">
+        <property name="hibernateTemplate" ref="hibernateTemplete"></property>
+    </bean>
+    <bean name="attributedao" class="com.zhang.dao.PrintAttributeDao">
+        <property name="hibernateTemplate" ref="hibernateTemplete"></property>
+    </bean>
+    <bean name="printfiledao" class="com.zhang.dao.PrintFileDao">
+        <property name="hibernateTemplate" ref="hibernateTemplete"></property>
+    </bean>
+    <bean name="taskdao" class="com.zhang.dao.TaskDao">
+         <property name="hibernateTemplate" ref="hibernateTemplete"></property>
+    </bean>
+    <bean name="userdao" class="com.zhang.dao.UsersDao">
+          <property name="hibernateTemplate" ref="hibernateTemplete"></property>
+    </bean>
+    
+    <!-- 配置Service层进入工厂中 -->
+    <bean name="userservice" class="com.zhang.service.imp.UserService"/>
+    <bean name="adminservice" class="com.zhang.service.imp.AdminService"/>
+    <bean name="taskservice" class="com.zhang.service.imp.TaskService"/>
+    <bean name="printattributeservice" class="com.zhang.service.imp.PrintAttributeService"/>
+    <bean name="printfileservice" class="com.zhang.service.imp.PrintFileService"/>
+</beans>
